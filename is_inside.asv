@@ -1,10 +1,10 @@
 function inside = is_inside(p,th,phi,rows,cols);
 % p camera coordinates
 % q points coordinates
-% th angle fron x axis
-% phi angle from z axis
-% change the unit vec
-unit_vec=[sin(th*0.0174533)*cos(phi*0.0174533),sin(th*0.0174533)*sin(phi*0.0174533), cos(th*0.0174533)];
+% th angle from x axis towards y
+% phi angle from z axis towards y
+% change the unit vec \/
+unit_vec=[sin(phi*0.0174533)*cos(th*0.0174533),sin(phi*0.0174533)*sin(phi*0.0174533), sin(th*0.0174533)];
 %q_p=q-p;
 qi=meshgrid(0:rows-1,0:cols-1);
 qj=meshgrid(0:rows-1,0:cols-1)';

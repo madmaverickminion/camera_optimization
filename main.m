@@ -1,22 +1,25 @@
 rng default % For reproducibility
-% make changes for 25 * 25 * 25 
+% make changes for 52 * 52 * 25 
 % 24 cameras 
 % camera placement only on two planes
     % 2 or 3
     % 1 or 3 
 fun = @objective;
-lb=repmat([0,0,2,0,0],1,24);
-ub=repmat([3,3,3,360,360],1,24);
+cameras=5;
+lb=repmat([0,0,1,0,0],1,cameras);
+ub=repmat([3,3,3,360,360],1,cameras);
 options = optimoptions('ga','PlotFcn', @gaplotbestf, 'FunctionTolerance',1e-7);
-x = ga(fun,120,[],[],[],[],lb,ub,[],1:120, options);
-%%
-% x=[ 0  ,   0 ,    3  , 216  , 225];
+x = ga(fun,5*cameras,[],[],[],[],lb,ub,[],1:5*cameras, options);
+
+%% 
+x=[ 0  ,   0 ,    3  , 216  , 225, 0  ,   0  ,   0 ,  144  , 225 ];
 sz=length(x)/5;
 num_param=5;
 camera_rows=4;
-rows=60;
-cols=60;
-final_matrix=zeros(rows,rows,rows);
+rows=52;
+cols=52;
+pages=25;
+final_matrix=zeros(cols,rows,pages);
 for i =1:sz
     pos_x_val=x(num_param*(i-1)+1);
     pos_y_val=x(num_param*(i-1)+2);
