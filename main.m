@@ -7,7 +7,7 @@ rng default % For reproducibility
 fun = @objective;
 cameras=5;
 lb=repmat([0,0,1,0,0],1,cameras);
-ub=repmat([3,3,3,360,360],1,cameras);
+ub=repmat([6,6,3,360,360],1,cameras);
 options = optimoptions('ga','PlotFcn', @gaplotbestf, 'FunctionTolerance',1e-7);
 x = ga(fun,5*cameras,[],[],[],[],lb,ub,[],1:5*cameras, options);
 
