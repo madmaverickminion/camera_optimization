@@ -3,8 +3,8 @@ function val = objective(x)
 % mesh grid 250X250X250
 num_param=5;
 sz=length(x)/num_param;
-camera_rows=7;
-camera_cols=7;
+camera_rows=6;
+camera_cols=6;
 camera_pages=4;
 rows=52; %width of the room 
 cols=52; %length of the room 
@@ -13,6 +13,7 @@ pages=25; %for z height of the room
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 
 final_matrix=zeros(cols,rows,pages);
+
 for i = 1:sz
     pos_x_val=x(num_param*(i-1)+1);
     pos_y_val=x(num_param*(i-1)+2);
@@ -23,7 +24,6 @@ for i = 1:sz
         return;
     end
 
- 
     for j= i+1:sz
         curr_pos_x=x(num_param*(j-1)+1);
         curr_pos_y=x(num_param*(j-1)+2);
@@ -52,13 +52,23 @@ for i = 1:sz
         return;
     end
     t=is_inside([pos_x_val,pos_y_val,pos_z_val],theta_val ,angle_val,rows,cols,pages);
+
     final_matrix=cat(4,final_matrix,t);
+    % size(final_matrix)
 
 end
 
 final_matrix(:,:,:,1)=[];
+% size(final_matrix)
 % sz=size(final_matrix,4);
-
-val=-sum(final_matrix,"all");
+length_final=size(final_matrix,4);
+temp_mat=zeros(cols,rows,pages);
+for i = 1:length_final
+    for j = i+1:length_final
+        temp_mat=(temp_mat | (final_matrix(:,:,:,i) &final_matrix(:,:,:,j)));
+    end
+end
+val = -sum(temp_mat,"all");
+% val=-sum(final_matrix,"all");
 
 end
